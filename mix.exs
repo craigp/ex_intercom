@@ -4,7 +4,8 @@ defmodule Intercom.Mixfile do
   def project do
     [
       app: :intercom,
-      version: "0.0.2",
+      name: :ex_intercom,
+      version: "0.0.3",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
@@ -39,7 +40,7 @@ defmodule Intercom.Mixfile do
 
   defp package do
     [
-      name: "ex_intercom",
+      name: :ex_intercom,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       licenses: ["MIT"],
       maintainers: ["Craig Paterson"],
