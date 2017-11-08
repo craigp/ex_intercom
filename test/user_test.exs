@@ -1,14 +1,14 @@
-defmodule Intercom.UserTest do
+defmodule ExIntercom.UserTest do
 
   @moduledoc false
 
   use ExUnit.Case
-  alias Intercom.{User, Location, Avatar, Company, SocialProfile,
+  alias ExIntercom.{User, Location, Avatar, Company, SocialProfile,
     Segment, Tag}
 
   setup do
     %{port: port} = bypass = Bypass.open
-    Application.put_env(:intercom, :api_url, "http://localhost:#{port}")
+    Application.put_env(:ex_intercom, :api_url, "http://localhost:#{port}")
     {:ok, user_json} = File.read("test/support/user.json")
     {:ok,
       bypass: bypass,
@@ -16,7 +16,7 @@ defmodule Intercom.UserTest do
     }
   end
 
-  test "fetches a user by their Intercom ID", %{
+  test "fetches a user by their ExIntercom ID", %{
     bypass: bypass,
     user_json: user_json
   } do

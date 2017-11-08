@@ -1,4 +1,4 @@
-defmodule Intercom.SocialProfile do
+defmodule ExIntercom.SocialProfile do
 
   @moduledoc """
   An Intercom user social profile.

@@ -1,4 +1,4 @@
-defmodule Intercom.Tag do
+defmodule ExIntercom.Tag do
 
   @moduledoc """
   An Intercom tag.

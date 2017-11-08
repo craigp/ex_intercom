@@ -1,13 +1,13 @@
-defmodule Intercom.AdminTest do
+defmodule ExIntercom.AdminTest do
 
   @moduledoc false
 
   use ExUnit.Case
-  alias Intercom.Admin
+  alias ExIntercom.Admin
 
   setup do
     %{port: port} = bypass = Bypass.open
-    Application.put_env(:intercom, :api_url, "http://localhost:#{port}")
+    Application.put_env(:ex_intercom, :api_url, "http://localhost:#{port}")
     {:ok, admin_json} = File.read("test/support/admin.json")
     {:ok,
       bypass: bypass,
@@ -15,7 +15,7 @@ defmodule Intercom.AdminTest do
     }
   end
 
-  test "fetches a admin by its Intercom ID", %{
+  test "fetches a admin by its ExIntercom ID", %{
     bypass: bypass,
     admin_json: admin_json
   } do

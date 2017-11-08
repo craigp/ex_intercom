@@ -1,8 +1,8 @@
-defmodule Intercom.HTTP do
+defmodule ExIntercom.HTTP do
 
   @moduledoc false
 
-  alias Intercom.Request
+  alias ExIntercom.Request
 
   @default_api_url "https://api.intercom.io"
 
@@ -22,7 +22,7 @@ defmodule Intercom.HTTP do
 
   @spec build_url(String.t, map) :: String.t
   defp build_url("/" <> _ = path, %{} = query) do
-    url = Application.get_env(:intercom, :api_url, @default_api_url)
+    url = Application.get_env(:ex_intercom, :api_url, @default_api_url)
     "#{url}#{path}?#{URI.encode_query(query)}"
   end
 

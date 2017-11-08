@@ -1,5 +1,5 @@
-defmodule IntercomTest do
+defmodule ExIntercomTest do
   use ExUnit.Case
-  doctest Intercom
+  doctest ExIntercom
 
 end

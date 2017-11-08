@@ -1,13 +1,13 @@
-defmodule Intercom.SegmentTest do
+defmodule ExIntercom.SegmentTest do
 
   @moduledoc false
 
   use ExUnit.Case
-  alias Intercom.Segment
+  alias ExIntercom.Segment
 
   setup do
     %{port: port} = bypass = Bypass.open
-    Application.put_env(:intercom, :api_url, "http://localhost:#{port}")
+    Application.put_env(:ex_intercom, :api_url, "http://localhost:#{port}")
     {:ok, segment_json} = File.read("test/support/segment.json")
     {:ok,
       bypass: bypass,
@@ -15,7 +15,7 @@ defmodule Intercom.SegmentTest do
     }
   end
 
-  test "fetches a segment by its Intercom ID", %{
+  test "fetches a segment by its ExIntercom ID", %{
     bypass: bypass,
     segment_json: segment_json
   } do

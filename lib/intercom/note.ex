@@ -1,4 +1,4 @@
-defmodule Intercom.Note do
+defmodule ExIntercom.Note do
 
   @moduledoc """
   An Intercom user note.
@@ -6,7 +6,7 @@ defmodule Intercom.Note do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Intercom.{User, Admin}
+  alias ExIntercom.{User, Admin}
   alias __MODULE__
 
   @primary_key false

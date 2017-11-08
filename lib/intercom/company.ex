@@ -1,4 +1,4 @@
-defmodule Intercom.Company do
+defmodule ExIntercom.Company do
 
   @moduledoc """
   An Intercom company.
@@ -6,7 +6,7 @@ defmodule Intercom.Company do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Intercom.{HTTP, Request}
+  alias ExIntercom.{HTTP, Request}
   alias __MODULE__
 
   @path "/companies"
@@ -33,7 +33,7 @@ defmodule Intercom.Company do
   @type result :: {:ok, Company.t} | {:error, any}
 
   @doc """
-  Fetches a company by its Intercom ID.
+  Fetches a company by its ExIntercom ID.
   """
   @spec get(String.t) :: result
   def get(id) when is_binary(id) do

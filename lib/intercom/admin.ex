@@ -1,4 +1,4 @@
-defmodule Intercom.Admin do
+defmodule ExIntercom.Admin do
 
   @moduledoc """
   An intercom admin.
@@ -6,7 +6,7 @@ defmodule Intercom.Admin do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Intercom.{HTTP, Request}
+  alias ExIntercom.{HTTP, Request}
   alias __MODULE__
 
   @path "/admins"
@@ -23,7 +23,7 @@ defmodule Intercom.Admin do
   @type result :: {:ok, Admin.t} | {:error, any}
 
   @doc """
-  Fetches an admin by their Intercom ID.
+  Fetches an admin by their ExIntercom ID.
   """
   @spec get(String.t) :: result
   def get(id) when is_binary(id) do

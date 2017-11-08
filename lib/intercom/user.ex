@@ -1,19 +1,19 @@
-defmodule Intercom.User do
+defmodule ExIntercom.User do
 
   @moduledoc """
-  Users are the primary way of interacting with the Intercom API. If you know a
+  Users are the primary way of interacting with the ExIntercom API. If you know a
   user's ID you can easily fetch their data.
 
   ```elixir
-  {:ok, %Intercom.User{} = user} = Intercom.User.get("530370b477ad7120001d")
+  {:ok, %ExIntercom.User{} = user} = ExIntercom.User.get("530370b477ad7120001d")
   ```
 
   You can also look them up using the `user_id` your system assigned to them
   when creating the user record, or alternatively, via their email address.
 
   ```elixir
-  {:ok, %Intercom.User{}} = Intercom.User.find({:user_id, 25})
-  {:ok, %Intercom.User{}} = Intercom.User.find({:email, "wash@serenity.io"})
+  {:ok, %ExIntercom.User{}} = ExIntercom.User.find({:user_id, 25})
+  {:ok, %ExIntercom.User{}} = ExIntercom.User.find({:email, "wash@serenity.io"})
   ```
 
   If the user cannot be found you will get `{:error, :not_found}`. If your
@@ -23,7 +23,7 @@ defmodule Intercom.User do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Intercom.{Location, Avatar, Company, SocialProfile, Segment,
+  alias ExIntercom.{Location, Avatar, Company, SocialProfile, Segment,
     Tag, Request, HTTP}
   alias __MODULE__
 
@@ -60,7 +60,7 @@ defmodule Intercom.User do
     {:error, :not_authorised} | {:error, any}
 
   @doc """
-  Fetches a user by their Intercom ID.
+  Fetches a user by their ExIntercom ID.
   """
   @spec get(String.t) :: result
   def get(id) when is_binary(id) do

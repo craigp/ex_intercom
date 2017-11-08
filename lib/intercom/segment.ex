@@ -1,4 +1,4 @@
-defmodule Intercom.Segment do
+defmodule ExIntercom.Segment do
 
   @moduledoc """
   An Intercom segment.
@@ -6,7 +6,7 @@ defmodule Intercom.Segment do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Intercom.{HTTP, Request}
+  alias ExIntercom.{HTTP, Request}
   alias __MODULE__
 
   @path "/segments"
@@ -26,7 +26,7 @@ defmodule Intercom.Segment do
   @type result :: {:ok, Segment.t} | {:error, any}
 
   @doc """
-  Fetches a segment by its Intercom ID.
+  Fetches a segment by its ExIntercom ID.
   """
   @spec get(String.t) :: result
   def get(id) when is_binary(id) do

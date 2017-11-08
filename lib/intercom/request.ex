@@ -1,4 +1,4 @@
-defmodule Intercom.Request do
+defmodule ExIntercom.Request do
 
   @moduledoc false
 

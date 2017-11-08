@@ -1,7 +1,7 @@
-defmodule Intercom do
+defmodule ExIntercom do
 
   @moduledoc """
-  Intercom API client library
+  ExIntercom API client library
   """
 
 end

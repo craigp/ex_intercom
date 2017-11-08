@@ -1,4 +1,4 @@
-defmodule Intercom.Avatar do
+defmodule ExIntercom.Avatar do
 
   @moduledoc """
   An Intercom user avatar.

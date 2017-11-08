@@ -1,13 +1,13 @@
-defmodule Intercom.CompanyTest do
+defmodule ExIntercom.CompanyTest do
 
   @moduledoc false
 
   use ExUnit.Case
-  alias Intercom.Company
+  alias ExIntercom.Company
 
   setup do
     %{port: port} = bypass = Bypass.open
-    Application.put_env(:intercom, :api_url, "http://localhost:#{port}")
+    Application.put_env(:ex_intercom, :api_url, "http://localhost:#{port}")
     {:ok, company_json} = File.read("test/support/company.json")
     {:ok,
       bypass: bypass,
@@ -15,7 +15,7 @@ defmodule Intercom.CompanyTest do
     }
   end
 
-  test "fetches a company by its Intercom ID", %{
+  test "fetches a company by its ExIntercom ID", %{
     bypass: bypass,
     company_json: company_json
   } do

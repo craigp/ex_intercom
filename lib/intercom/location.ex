@@ -1,4 +1,4 @@
-defmodule Intercom.Location do
+defmodule ExIntercom.Location do
 
   @moduledoc """
   An Intercom user location.
