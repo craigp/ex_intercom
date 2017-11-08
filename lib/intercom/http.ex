@@ -13,7 +13,7 @@ defmodule Intercom.HTTP do
     case HTTPoison.get(build_url(path, query), headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.decode(body, keys: :atoms)
-      {:ok, %HTTPoison.Response{status_code: code} = res} ->
+      {:ok, %HTTPoison.Response{status_code: code}} ->
         {:error, {:http, code}}
       {:error, _} = err ->
         err

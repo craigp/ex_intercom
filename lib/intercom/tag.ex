@@ -1,13 +1,12 @@
 defmodule Intercom.Tag do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom tag.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
   alias __MODULE__
-
-  @required_fields ~w(id)a
-  @optional_fields ~w(type name)a
 
   @primary_key false
   embedded_schema do
@@ -20,10 +19,8 @@ defmodule Intercom.Tag do
 
   @doc false
   @spec changeset(Tag.t, map) :: Ecto.Changeset.t
-  def changeset(%Tag{} = location, %{} = changes) do
-    location
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+  def changeset(%Tag{} = tag, %{} = changes) do
+    cast(tag, changes, __schema__(:fields))
   end
 
 end

@@ -1,14 +1,13 @@
 defmodule Intercom.Note do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom user note.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
   alias Intercom.{User, Admin}
   alias __MODULE__
-
-  @required_fields ~w(id)a
-  @optional_fields ~w(type created_at body)a
 
   @primary_key false
   embedded_schema do
@@ -25,9 +24,7 @@ defmodule Intercom.Note do
   @doc false
   @spec changeset(Note.t, map) :: Ecto.Changeset.t
   def changeset(%Note{} = note, %{} = changes) do
-    note
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+    cast(note, changes, __schema__(:fields) -- __schema__(:embeds))
   end
 
 end

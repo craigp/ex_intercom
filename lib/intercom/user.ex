@@ -1,6 +1,25 @@
 defmodule Intercom.User do
 
-  @moduledoc false
+  @moduledoc """
+  Users are the primary way of interacting with the Intercom API. If you know a
+  user's ID you can easily fetch their data.
+
+  ```elixir
+  {:ok, %Intercom.User{} = user} = Intercom.User.get("530370b477ad7120001d")
+  ```
+
+  You can also look them up using the `user_id` your system assigned to them
+  when creating the user record, or alternatively, via their email address.
+
+  ```elixir
+  {:ok, %Intercom.User{}} = Intercom.User.find({:user_id, 25})
+  {:ok, %Intercom.User{}} = Intercom.User.find({:email, "wash@serenity.io"})
+  ```
+
+  If the user cannot be found you will get `{:error, :not_found}`. If your
+  token doesn't have sufficient permissions to access a resource the return
+  value will be `{:error, :not_authorised}`.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -9,10 +28,6 @@ defmodule Intercom.User do
   alias __MODULE__
 
   @path "/users"
-  @required_fields ~w(type id user_id)a
-  @optional_fields ~w(email phone name updated_at last_seen_ip
-    unsubscribed_from_emails last_request_at signed_up_at
-    created_at session_count user_agent_data pseudonym anonymous)a
 
   @primary_key false
   embedded_schema do
@@ -41,7 +56,8 @@ defmodule Intercom.User do
   end
 
   @type t :: %__MODULE__{}
-  @typep result :: {:ok, User.t} | {:error, any}
+  @type result :: {:ok, User.t} | {:error, :not_found} |
+    {:error, :not_authorised} | {:error, any}
 
   @doc """
   Fetches a user by their Intercom ID.
@@ -52,13 +68,15 @@ defmodule Intercom.User do
     |> Request.build
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
   @doc """
-  Lookup a user by their assigned user ID or email address.
+  Look up a user by their assigned user ID or email address.
   """
   @spec find({:user_id | :email, String.t}) :: result
   def find({:user_id, user_id}) when is_binary(user_id) do
@@ -66,8 +84,10 @@ defmodule Intercom.User do
     |> Request.build(%{user_id: user_id})
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
@@ -76,8 +96,10 @@ defmodule Intercom.User do
     |> Request.build(%{email: email})
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
@@ -85,14 +107,13 @@ defmodule Intercom.User do
   @spec changeset(User.t, map) :: Ecto.Changeset.t
   def changeset(%User{} = user, %{} = changes) do
     user
-    |> cast(changes, @required_fields ++ @optional_fields)
+    |> cast(changes, __schema__(:fields) -- __schema__(:embeds))
     |> cast_embed(:location, with: &Location.changeset/2)
     |> cast_embed(:avatar, with: &Avatar.changeset/2)
     |> cast_embed(:social_profiles, with: &SocialProfile.changeset/2)
     |> cast_embed(:companies, with: &Company.changeset/2)
     |> cast_embed(:segments, with: &Segment.changeset/2)
     |> cast_embed(:tags, with: &Tag.changeset/2)
-    |> validate_required(@required_fields)
   end
 
   @doc false

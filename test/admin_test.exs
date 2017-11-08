@@ -2,7 +2,7 @@ defmodule Intercom.AdminTest do
 
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias Intercom.Admin
 
   setup do

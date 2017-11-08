@@ -1,13 +1,12 @@
 defmodule Intercom.SocialProfile do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom user social profile.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
   alias __MODULE__
-
-  @required_fields ~w(id)a
-  @optional_fields ~w(name username url)a
 
   @primary_key false
   embedded_schema do
@@ -21,10 +20,8 @@ defmodule Intercom.SocialProfile do
 
   @doc false
   @spec changeset(SocialProfile.t, map) :: Ecto.Changeset.t
-  def changeset(%SocialProfile{} = location, %{} = changes) do
-    location
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+  def changeset(%SocialProfile{} = social_profile, %{} = changes) do
+    cast(social_profile, changes, __schema__(:fields))
   end
 
 end

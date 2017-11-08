@@ -1,15 +1,12 @@
 defmodule Intercom.Location do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom user location.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
   alias __MODULE__
-
-  @required_fields ~w(type)a
-  @optional_fields ~w(city_name continent_code country_name
-    country_code latitude longitude postal_code region_name
-    timezone)a
 
   @primary_key false
   embedded_schema do
@@ -30,9 +27,7 @@ defmodule Intercom.Location do
   @doc false
   @spec changeset(Location.t, map) :: Ecto.Changeset.t
   def changeset(%Location{} = location, %{} = changes) do
-    location
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+    cast(location, changes, __schema__(:fields))
   end
 
 end

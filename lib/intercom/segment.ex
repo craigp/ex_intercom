@@ -1,6 +1,8 @@
 defmodule Intercom.Segment do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom segment.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -8,8 +10,6 @@ defmodule Intercom.Segment do
   alias __MODULE__
 
   @path "/segments"
-  @required_fields ~w(id)a
-  @optional_fields ~w(type name created_at updated_at person_type count)a
 
   @primary_key false
   embedded_schema do
@@ -23,7 +23,7 @@ defmodule Intercom.Segment do
   end
 
   @type t :: %__MODULE__{}
-  @typep result :: {:ok, Segment.t} | {:error, any}
+  @type result :: {:ok, Segment.t} | {:error, any}
 
   @doc """
   Fetches a segment by its Intercom ID.
@@ -34,17 +34,17 @@ defmodule Intercom.Segment do
     |> Request.build
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
   @doc false
   @spec changeset(Segment.t, map) :: Ecto.Changeset.t
-  def changeset(%Segment{} = location, %{} = changes) do
-    location
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+  def changeset(%Segment{} = segment, %{} = changes) do
+    cast(segment, changes, __schema__(:fields))
   end
 
   @doc false

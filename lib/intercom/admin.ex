@@ -1,6 +1,8 @@
 defmodule Intercom.Admin do
 
-  @moduledoc false
+  @moduledoc """
+  An intercom admin.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -8,8 +10,6 @@ defmodule Intercom.Admin do
   alias __MODULE__
 
   @path "/admins"
-  @required_fields ~w(id)a
-  @optional_fields ~w(type name email)a
 
   @primary_key false
   embedded_schema do
@@ -20,7 +20,7 @@ defmodule Intercom.Admin do
   end
 
   @type t :: %__MODULE__{}
-  @typep result :: {:ok, Admin.t} | {:error, any}
+  @type result :: {:ok, Admin.t} | {:error, any}
 
   @doc """
   Fetches an admin by their Intercom ID.
@@ -31,17 +31,17 @@ defmodule Intercom.Admin do
     |> Request.build
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
   @doc false
   @spec changeset(Admin.t, map) :: Ecto.Changeset.t
   def changeset(%Admin{} = admin, %{} = changes) do
-    admin
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+    cast(admin, changes, __schema__(:fields))
   end
 
   @doc false

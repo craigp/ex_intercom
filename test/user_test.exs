@@ -2,7 +2,7 @@ defmodule Intercom.UserTest do
 
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias Intercom.{User, Location, Avatar, Company, SocialProfile,
     Segment, Tag}
 

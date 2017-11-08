@@ -2,19 +2,22 @@ defmodule Intercom.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :ex_intercom,
-     version: "0.0.1",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: [
-       "coveralls": :test,
-       "coveralls.detail": :test,
-       "coveralls.post": :test
-     ],
-     description: "Intercom API client library",
-     package: package()]
+    [
+      app: :intercom,
+      version: "0.0.2",
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        "coveralls": :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test
+      ],
+      description: "Intercom API client library",
+      package: package(),
+      source_url: "https://github.com/craigp/ex_intercom"
+    ]
   end
 
   defp deps do
@@ -36,6 +39,7 @@ defmodule Intercom.Mixfile do
 
   defp package do
     [
+      name: "ex_intercom",
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       licenses: ["MIT"],
       maintainers: ["Craig Paterson"],

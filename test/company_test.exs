@@ -2,7 +2,7 @@ defmodule Intercom.CompanyTest do
 
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias Intercom.Company
 
   setup do

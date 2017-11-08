@@ -1,6 +1,8 @@
 defmodule Intercom.Company do
 
-  @moduledoc false
+  @moduledoc """
+  An Intercom company.
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -8,9 +10,6 @@ defmodule Intercom.Company do
   alias __MODULE__
 
   @path "/companies"
-  @required_fields ~w(id)a
-  @optional_fields ~w(type name plan company_id remote_created_at created_at
-    updated_at size website industry monthly_spend session_count user_count)a
 
   @primary_key false
   embedded_schema do
@@ -31,7 +30,7 @@ defmodule Intercom.Company do
   end
 
   @type t :: %__MODULE__{}
-  @typep result :: {:ok, Company.t} | {:error, any}
+  @type result :: {:ok, Company.t} | {:error, any}
 
   @doc """
   Fetches a company by its Intercom ID.
@@ -42,17 +41,17 @@ defmodule Intercom.Company do
     |> Request.build
     |> HTTP.get
     |> case do
-      {:ok, map}        -> parse(map)
-      {:error, _} = err -> err
+      {:ok, map}             -> parse(map)
+      {:error, {:http, 404}} -> {:error, :not_found}
+      {:error, {:http, 401}} -> {:error, :not_authorised}
+      {:error, _} = err      -> err
     end
   end
 
   @doc false
   @spec changeset(Company.t, map) :: Ecto.Changeset.t
-  def changeset(%Company{} = location, %{} = changes) do
-    location
-    |> cast(changes, @required_fields ++ @optional_fields)
-    |> validate_required(@required_fields)
+  def changeset(%Company{} = company, %{} = changes) do
+    cast(company, changes, __schema__(:fields))
   end
 
   @doc false

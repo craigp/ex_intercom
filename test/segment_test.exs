@@ -2,7 +2,7 @@ defmodule Intercom.SegmentTest do
 
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias Intercom.Segment
 
   setup do
